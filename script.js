@@ -1,35 +1,55 @@
 document.getElementById('registrationForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const queryType = document.querySelector('input[name="queryType"]:checked');
+    const message = document.getElementById('message').value.trim();
+    const consent = document.getElementById('consent').checked;
 
     let valid = true;
 
-    document.getElementById('usernameError').style.display = 'none';
+    document.getElementById('firstNameError').style.display = 'none';
+    document.getElementById('lastNameError').style.display = 'none';
     document.getElementById('emailError').style.display = 'none';
-    document.getElementById('passwordError').style.display = 'none';
+    document.getElementById('queryTypeError').style.display = 'none';
+    document.getElementById('messageError').style.display = 'none';
+    document.getElementById('consentError').style.display = 'none';
 
-    if (!/^[a-zA-Z0-9]+$/.test(username)) {
-        document.getElementById('usernameError').textContent = 'Username must be alphanumeric.';
-        document.getElementById('usernameError').style.display = 'block';
+    if (firstName === '') {
+        document.getElementById('firstNameError').style.display = 'block';
         valid = false;
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        document.getElementById('emailError').textContent = 'Invalid email format.';
+    if (lastName === '') {
+        document.getElementById('lastNameError').style.display = 'block';
+        valid = false;
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.(com|org|edu)$/;
+if (!emailPattern.test(email)) {
+    document.getElementById('emailError').style.display = 'block';
+    valid = false;
+}
+
+    if (!emailPattern.test(email)) {
         document.getElementById('emailError').style.display = 'block';
         valid = false;
     }
 
-    if (password.length < 6 || 
-        !/[A-Z]/.test(password) || 
-        !/[a-z]/.test(password) || 
-        !/[0-9]/.test(password) || 
-        !/[!@#$%^&*]/.test(password)) {
-        document.getElementById('passwordError').textContent = 'Password must be at least 6 characters long, include uppercase, lowercase, number, and special character.';
-        document.getElementById('passwordError').style.display = 'block';
+    if (!queryType) {
+        document.getElementById('queryTypeError').style.display = 'block';
+        valid = false;
+    }
+
+    if (message === '') {
+        document.getElementById('messageError').style.display = 'block';
+        valid = false;
+    }
+
+    if (!consent) {
+        document.getElementById('consentError').style.display = 'block';
         valid = false;
     }
 
